@@ -27,9 +27,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
-    env:
-      POSTGRES_PASSWORD_FILE: ${{ runner.temp }}/postgres_password
-
     defaults:
       run:
         shell: bash
@@ -54,10 +51,11 @@ jobs:
       - name: Create postgres password file
         run: |
           umask 077
-          printf '%s' 'test' > "$POSTGRES_PASSWORD_FILE"
+          printf '%s' 'test' > "$RUNNER_TEMP/postgres-password"
 
       - name: Run backend validation
         env:
+          POSTGRES_PASSWORD_FILE: ${{ runner.temp }}/postgres-password
           POSTGRES_USER: test
           POSTGRES_DB: test
           POSTGRES_HOST: localhost
