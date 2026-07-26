@@ -46,4 +46,5 @@ jobs:
           install -m 0755 actionlint "$RUNNER_TEMP/actionlint"
 
       - name: Validate workflow files
-        run: "$RUNNER_TEMP/actionlint"
+        run: |
+          "$RUNNER_TEMP/actionlint"
